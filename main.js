@@ -1,4 +1,4 @@
-
+$("#statusBox").hide();
 var ethers = require('ethers');
 
 //Abi and bytecode
@@ -348,12 +348,19 @@ $("#CreateToken").click(function(){
 		    let contract = await factory.deploy();
 		    console.log(contract.address);
 		    console.log(contract.deployTransaction.hash);
+
+				$("#statusBox").append("<h5>Contacting Blockchain</h5>");
+				$("#statusBox").show();
+
 		    await contract.deployed()
 
 		    var sendPromise = contract.initializeCoin(tokenName, tokenSymbol, tokenNumber);
 
 		    sendPromise.then(function(transaction){
 		      console.log(transaction);
+					$("#statusBox").empty();
+					$("#statusBox").append("<h5>Congratulations!</h5><h5>Token Created!</h5>");
+					$("#statusBox").show();
 		    });
 			})();
 		}
